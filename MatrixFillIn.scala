@@ -1,3 +1,4 @@
+import scala.annotation.tailrec
 
 /**
   * https://programmingpraxis.com/2016/01/12/matrix-fill-in/
@@ -24,15 +25,17 @@ object MatrixFillIn {
     def analyze(matrix: MatrixList): List[(Int, Int)] = {
       val rows = matrix.rows
       val cols = matrix.cols
-      def _analyze(matrix: List[Boolean], row: Int = 0, col: Int = 0): List[(Int, Int)] = {
+      @tailrec
+      def _analyze(matrix: List[Boolean], row: Int = 0, col: Int = 0, result: List[(Int, Int)] = Nil): List[(Int, Int)] = {
         val coord = if (matrix.head) List((row, col)) else Nil
+        val newResults = coord ::: result
         if (row + 1 < rows) {
-          coord ::: _analyze(matrix.tail, row + 1, col)
+          _analyze(matrix.tail, row + 1, col, newResults)
         } else {
           if (col + 1 < cols) {
-            coord ::: _analyze(matrix.tail, 0, col + 1)
+            _analyze(matrix.tail, 0, col + 1, newResults)
           } else {
-            coord
+            newResults
           }
         }
       }
@@ -52,15 +55,17 @@ object MatrixFillIn {
     def fill(matrix: MatrixList, fillRows: Set[Int], fillCols: Set[Int]): MatrixList = {
       val rows = matrix.rows
       val cols = matrix.cols
-      def _fill(matrix: List[Boolean], fillRows: Set[Int], fillCols: Set[Int], row: Int = 0, col: Int = 0): List[Boolean] = {
+      @tailrec
+      def _fill(matrix: List[Boolean], fillRows: Set[Int], fillCols: Set[Int], row: Int = 0, col: Int = 0, result: List[Boolean] = Nil): List[Boolean] = {
         val coord = fillRows.contains(row) || fillCols.contains(col) || matrix.head
+        val newResult = coord :: result
         if(row + 1 < rows) {
-          coord :: _fill(matrix.tail, fillRows, fillCols, row + 1, col)
+          _fill(matrix.tail, fillRows, fillCols, row + 1, col, newResult)
         } else {
           if (col + 1 < cols) {
-            coord :: _fill(matrix.tail, fillRows, fillCols, 0, col + 1)
+            _fill(matrix.tail, fillRows, fillCols, 0, col + 1, newResult)
           } else {
-            List(coord)
+            newResult.reverse
           }
         }
       }
