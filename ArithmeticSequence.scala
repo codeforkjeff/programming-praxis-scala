@@ -9,7 +9,7 @@ object ArithmeticSequence {
       if (ints.size <= 1) {
         return true
       }
-      val withoutFirst = ints.drop(1)
+      val withoutFirst = ints.tail
       val diffs = withoutFirst.zip(ints).map(pair => pair._1 - pair._2)
       val firstDiff = diffs.head
       diffs.forall(n => n == firstDiff)

@@ -19,7 +19,7 @@ object Canoes {
         List(firstPerson, secondPerson)
       else
         List(firstPerson)
-      val remainder = if (secondPerson > 0) remainderWithoutHeaviest.drop(1) else remainderWithoutHeaviest
+      val remainder = if (secondPerson > 0) remainderWithoutHeaviest.tail else remainderWithoutHeaviest
       canoe :: makeCanoes(remainder)
     }
     _makeCanoes(weights.filter(_ <= MAX_WEIGHT).sorted)

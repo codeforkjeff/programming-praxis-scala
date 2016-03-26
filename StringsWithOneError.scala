@@ -24,7 +24,7 @@ object StringsWithOneError {
       } else {
         // char did NOT match, so go into strict mode or return -1 if we're already in strict mode
         if (!strictMode) {
-          return _hasOneError(s1, s2.drop(1), true, indexOfDiff)
+          return _hasOneError(s1, s2.tail, true, indexOfDiff)
         } else {
           return -1
         }
@@ -59,8 +59,8 @@ object StringsWithOneError {
       }
     }
 
-    if (math.abs(s1.size - s2.size) == 1) {
-      if (s1.size > s2.size) {
+    if (math.abs(s1.length - s2.length) == 1) {
+      if (s1.length > s2.length) {
         return _hasOneError(s2, s1)
       } else {
         return _hasOneError(s1, s2)

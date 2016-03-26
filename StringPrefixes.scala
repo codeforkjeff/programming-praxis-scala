@@ -20,11 +20,11 @@ object StringPrefixes {
     }
     // if there's no prefix yet, use the 1st string as the prefix
     if (prefix == "") {
-      return findCommonPrefix(strings.drop(1), strings.head)
+      return findCommonPrefix(strings.tail, strings.head)
     }
     // calculate new prefix (if any) and do recursion
     val newPrefix = getCommonPrefix(strings.head, prefix)
-    if (newPrefix != "") findCommonPrefix(strings.drop(1), newPrefix) else ""
+    if (newPrefix != "") findCommonPrefix(strings.tail, newPrefix) else ""
   }
 
   def main(args: Array[String]) : Unit = {
